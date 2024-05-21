@@ -9,17 +9,39 @@ namespace TcheloLibrary.Controllers;
 public class StockController : TcheloBooksBaseController
 {
     [HttpPost("create-book")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    
     public IActionResult Create([FromBody] RequestCreateBookJson request)
     {
+        var _stockMethods = new StockMethods();
+        string? result;
         var book = new Book
         {
+            Id = request.Id,
             Title = request.Title,
             Author = request.Author,
             Price = request.Price,
             StockQnt = request.StockQnt,
+            Genero = request.Genero,
         };
-        
-        return Ok(book);
+
+        try {
+            result = _stockMethods.StockAdd(book);
+            if (result == null) {
+                return NotFound("Livro já existe no estoque");
+            }
+            else
+            {
+                return Created();
+            }
+        }
+        catch (Exception ex)
+        {
+            result = ex.Message;
+            return BadRequest(result);
+        }
+       
     }
 }

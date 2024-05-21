@@ -2,7 +2,12 @@
 
 namespace TcheloLibrary;
 
-public class Stock
+public class Stock 
 {
-    public List<Book>? Books { get; set; }
+  public static List<Book> books = new List<Book>();
+
+    static Stock()
+    {
+        books = new List<Book>();
+    }
 }
