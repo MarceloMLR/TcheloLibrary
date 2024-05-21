@@ -34,7 +34,7 @@ public class StockController : TcheloBooksBaseController
             }
             else
             {
-                return Created();
+                return Created(string.Empty,result);
             }
         }
         catch (Exception ex)
