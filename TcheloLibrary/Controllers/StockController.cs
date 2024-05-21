@@ -8,6 +8,8 @@ namespace TcheloLibrary.Controllers;
 [ApiController]
 public class StockController : TcheloBooksBaseController
 {
+
+
     [HttpPost("create-book")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,5 +45,16 @@ public class StockController : TcheloBooksBaseController
             return BadRequest(result);
         }
        
+    }
+
+    [HttpGet("all-books")]
+    [ProducesResponseType(typeof(List<Book>), StatusCodes.Status200OK)]
+    public IActionResult GetAll()
+    {
+        var _stockMethods = new StockMethods();
+
+        var result = _stockMethods.StockGetAll();
+
+        return Ok(result);
     }
 }
