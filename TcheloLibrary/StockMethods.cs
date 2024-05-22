@@ -15,14 +15,17 @@ namespace TcheloLibrary
             return("Livro Adicionado");
         }
 
-        public string StockRemove(int id)
+        public string? StockRemove(int id)
         {
-            if (books.Any(book => book.Id == id))
+            var removeBook = books.Find(book => book.Id == id);
+
+            if (removeBook != null)
             {
-                return ($"O id informado não existe");
+                books.Remove(removeBook);
+                return ("Livro removido do estoque");
             }
-            books.RemoveAt(id);
-            return ("Livro removido");
+            
+            return null;
         }
 
         public List<Book> StockGetAll()

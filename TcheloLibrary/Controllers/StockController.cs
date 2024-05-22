@@ -57,4 +57,21 @@ public class StockController : TcheloBooksBaseController
 
         return Ok(result);
     }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Delete([FromRoute]int id)
+    {
+        var _stockMethods = new StockMethods();
+        var result = _stockMethods.StockRemove(id);
+
+        if (result == null)
+        {
+            return NotFound("Livro não encontrado");
+        }
+
+        return NoContent();
+    }
 }
