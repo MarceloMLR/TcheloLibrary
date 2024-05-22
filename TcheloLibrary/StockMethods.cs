@@ -33,16 +33,33 @@ namespace TcheloLibrary
             return books;
         }
 
-        public void StockEdit(RequestCreateBookJson editBook)
+        public string? StockEdit(RequestCreateBookJson editBook)
         {
            var book = books.FirstOrDefault(b => b.Id == editBook.Id);
 
-            if(book != null)
+            
+            if (book != null)
             {
+                var bookType = book.GetType();
+                var editBookType = editBook.GetType();
 
+                foreach (var property in editBookType.GetProperties())
+                {           
+                    var value = property.GetValue(editBook);
+                    if (value != null)
+                    {
+                        var bookProperty = bookType.GetProperty(property.Name);
+                        if (bookProperty != null && bookProperty.CanWrite)
+                        {
+                            bookProperty.SetValue(book, value);
+                        }
+                    }
+                }
+
+                return ("Propriedades atualizadas");
             }
 
-            
+            return null;
         }
     }
 }

@@ -18,19 +18,8 @@ public class StockController : TcheloBooksBaseController
     public IActionResult Create([FromBody] RequestCreateBookJson request)
     {
         var _stockMethods = new StockMethods();
-        string? result;
-        var book = new Book
-        {
-            Id = request.Id,
-            Title = request.Title,
-            Author = request.Author,
-            Price = request.Price,
-            StockQnt = request.StockQnt,
-            Genero = request.Genero,
-        };
 
-        try {
-            result = _stockMethods.StockAdd(book);
+            var result = _stockMethods.StockAdd(request);
             if (result == null) {
                 return NotFound("Livro já existe no estoque");
             }
@@ -38,12 +27,7 @@ public class StockController : TcheloBooksBaseController
             {
                 return Created(string.Empty,result);
             }
-        }
-        catch (Exception ex)
-        {
-            result = ex.Message;
-            return BadRequest(result);
-        }
+        
        
     }
 
