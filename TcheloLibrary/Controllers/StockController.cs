@@ -42,6 +42,20 @@ public class StockController : TcheloBooksBaseController
         return Ok(result);
     }
 
+    [HttpPut]
+    [Route("{id}")]
+    public IActionResult Update(RequestUpdateBookJson updateBook, int id)
+    {
+        var _stockMethods = new StockMethods();
+
+        var result = _stockMethods.StockUpdate(updateBook, id);
+        if (result == null)
+        {
+            return NotFound("Livro não encontrado");
+        }
+        return Ok("Livro atualizado com sucesso");
+    }
+
     [HttpDelete]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

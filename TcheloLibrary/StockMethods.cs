@@ -33,9 +33,9 @@ namespace TcheloLibrary
             return books;
         }
 
-        public string? StockEdit(RequestCreateBookJson editBook)
+        public string? StockUpdate(RequestUpdateBookJson editBook, int id)
         {
-           var book = books.FirstOrDefault(b => b.Id == editBook.Id);
+           var book = books.FirstOrDefault(b => b.Id == id);
 
             
             if (book != null)
@@ -56,7 +56,7 @@ namespace TcheloLibrary
                     }
                 }
 
-                return ("Propriedades atualizadas");
+                return ("");
             }
 
             return null;
